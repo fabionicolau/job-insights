@@ -29,7 +29,7 @@ def get_unique_industries(path):
     table = read(path)
     industries = []
     for row in table:
-        if row["industry"] != "":
+        if row["industry"]:
             industries.append(row["industry"])
 
     return list(set(industries))
@@ -54,21 +54,16 @@ def filter_by_industry(jobs, industry):
 
 
 def get_max_salary(path):
-    """Get the maximum salary of all jobs
-
-    Must call `read`
-
-    Parameters
-    ----------
-    path : str
-        Must be passed to `read`
-
-    Returns
-    -------
-    int
-        The maximum salary paid out of all job opportunities
-    """
-    pass
+    table = read(path)
+    max_salary = 0
+    for row in table:
+        if (
+            row["max_salary"]
+            and row["max_salary"] != "invalid"
+            and int(row["max_salary"]) > max_salary
+        ):
+            max_salary = int(row["max_salary"])
+    return max_salary
 
 
 def get_min_salary(path):
